@@ -1,0 +1,24 @@
+.auth {
+    background-image: url(https://luxfon.com/pic/201203/1920x1200/luxfon.com-2852.jpg);
+    background-size: contain;
+}
+
+.container {
+    width: 1024px !important;
+    margin: 0 auto !important;
+}
+
+.container-flex {
+    position: absolute;
+    margin-left: -200px;
+    left: 50%;
+    top: 50%;
+    margin-top: -170px;
+}
+
+body {
+    position: relative;
+    z-index: 1000;
+    background-image: url('https://cs8.pikabu.ru/post_img/big/2016/03/19/9/145840139014918771.jpg');
+    background-size: cover;
+}
