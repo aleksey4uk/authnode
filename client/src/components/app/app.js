@@ -1,23 +1,18 @@
 import React from 'react';
 import AuthPage from '../pages/authPage';
-import {Switch} from 'react-router-dom';
-import { Card } from 'antd';
-import {connect} from 'react-redux';
+import {Switch, Route} from 'react-router-dom';
 import 'antd/dist/antd.css';
-import './app.css'
+import './app.css';
 
 function App(props) {
   return (
     <div className="App">
-          <AuthPage/>
+      <Switch>
+          <Route path='/' component={AuthPage}/>
+          <Route path='/' component={AuthPage}/>
+      </Switch>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ...state
-  }
-} 
-
-export default connect(mapStateToProps)(App);
+export default App;
