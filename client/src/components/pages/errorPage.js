@@ -6,7 +6,7 @@ const ErrorPage = () => {
     return (
         <div className="error-page">
             <Alert
-                message="Error"
+                message="ERROR 404"
                 description="This is an error message about copywriting."
                 type="error"
                 showIcon

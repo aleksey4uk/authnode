@@ -30,6 +30,7 @@ const HomePage = () => {
                 >
                 <SubMenu key="sub1" icon={<UserOutlined />} title="Пользователь">
                     <Menu.Item key="1">Статьи пользователя</Menu.Item>
+                    <Menu.Item key="2">Добавить статью</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">
                     <Menu.Item key="5">Все статьи</Menu.Item>
