@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, InputNumber, Button, Card } from 'antd';
 
 const layout = {
@@ -8,56 +8,68 @@ const layout = {
     wrapperCol: {
       span: 16,
     },
-  };
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not validate email!',
-      number: '${label} is not a validate number!',
-    },
-  };
+};
+const validateMessages = {
+required: '${label} is required!',
+types: {
+    email: '${label} is not validate email!',
+    number: '${label} is not a validate number!',
+},
+};
   
-  const AddNews = () => {
-    const onFinish = values => {
-      console.log(values);
-    };
-  
+const AddNews = ({onModal, setOnModal}) => {
+    const [valueForm, setValueForm] = useState({title: '', text:'', source: ''});
+    const editValueForm = (e) => {
+        const {id, value} = e.target;
+        switch(id) {
+            case `${id}`: 
+                setValueForm(s => ({...s, [id]: value}));
+        }
+    } 
+    const handleCancel = () => console.log('cancel');
+    const onFinish = (e) => {
+        setOnModal(false);
+        setValueForm({title: '', text:'', source: ''});
+        setOnModal(false);
+    }
+   
+    const {title, text, source} = valueForm;
     return (
-        <Card style={{width: "550px"}}>
-      <Form {...layout} name="nest-messages" onFinish={onFinish}>
-        <Form.Item
-          name={['user', 'Title']}
-          label="Заголовок"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+        <Modal
+            width='600px'
+            title="Введите Новость"
+            visible={onModal}
+            onOk={onFinish}
+            onCancel={handleCancel}
         >
-          <Input />
-        </Form.Item>
+            <Card style={{width: "550px"}}>
+                <Form {...layout}>
+                    <Form.Item 
+                        label="Заголовок"
+                        rules={[{required: true}]}>
+                        <Input id="title" onChange={editValueForm} value={title}/>
+                    </Form.Item>
 
-        <Form.Item name={['user', 'Источник']} label="Источник">
-          <Input />
-        </Form.Item>
-        <Form.Item 
-            name={['user', 'Текст новости']}
-            label="Тест новости"
-            rules={[
-                {
-                  required: true,
-                },
-            ]}>
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>
-          <Button type="primary" htmlType="submit">
-            Опубликовать
-          </Button>
-        </Form.Item>
-      </Form>
-      </Card>
+                    <Form.Item label="Источник">
+                        <Input id="source" onChange={editValueForm} value={source}/>
+                    </Form.Item>
+
+                    <Form.Item 
+                        label="Тест новости"
+                        rules={[
+                            {
+                            required: true,
+                            },
+                        ]}>
+                        <Input.TextArea id="text" onChange={editValueForm} value={text} />
+                    </Form.Item>
+                    
+                    <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </Modal>
     );
-  };
+};
 
 export { AddNews };
