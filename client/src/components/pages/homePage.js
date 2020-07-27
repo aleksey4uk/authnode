@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined } from '@ant-design/icons';
 import { Layout, Menu, Breadcrumb, Modal, Button } from 'antd';
@@ -8,12 +9,22 @@ import AddNews from '../add-news';
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-document.body.style.backgroundImage = 'asdasd';
-document.body.style.backgroundColor = 'rgb(240, 242, 245)';
-
 const HomePage = () => {
-    const [ onModal, setOnModal ] = useState(false);
-//  const [ value, setValue ] = useState({title: '' , text: '', source: ''});
+    const [login, setLogin] = useState(false);
+    const [onModal, setOnModal] = useState(false);
+    const history = useHistory();    
+
+    const logOut = () => {
+        localStorage.removeItem('loginStorage');
+        setLogin(false);
+        history.push('/')
+    }
+
+    const token = localStorage.getItem('loginStorage');
+    if(!token) {
+        return <Redirect to="/"/>
+    }
+
     return (
         <Layout>
             <Header>
@@ -21,6 +32,7 @@ const HomePage = () => {
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                 <Menu.Item key="1"><StarOutlined/>Главная</Menu.Item>
                 <Menu.Item key="2">Погода</Menu.Item>
+                
             </Menu>
             </Header>
             <Layout>
@@ -35,8 +47,12 @@ const HomePage = () => {
                     <Menu.Item key="1">Статьи пользователя</Menu.Item>
                     <Menu.Item 
                         key="2"
-                        onClick={()=>{setOnModal(true)}}
-                        >Добавить статью</Menu.Item>
+                        onClick={()=>{setOnModal(true)}}>
+                            Добавить статью
+                    </Menu.Item>
+                    <Menu.Item 
+                        key="3"
+                        onClick={logOut}>Выйти из уч. записи</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">
                     <Menu.Item key="5">Все статьи</Menu.Item>
@@ -66,12 +82,3 @@ const HomePage = () => {
 }
 
 export { HomePage };
-
-
-/*
-                <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
-*/

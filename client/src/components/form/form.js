@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useHistory} from 'react-router-dom';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
 import { Form, Input, Button, Checkbox, Card } from 'antd';
@@ -13,16 +14,27 @@ const tailLayout = {
 };
 
 const AuthForm = () => {
+  const history = useHistory();
   const [userForm, setUserForm] = useState({email: null, password: null});
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
 
   const onFinish = async (user)  => {
+    //1. Начинаем процесс загрузки, запускаем спиннер
+    //2. Отправялем наши данные на сервер
+    //3. Получаем ответ. 
+         //Если ок, то убирем спиннер загрузки и редеректим на главную страницу
+         //Если нет, то выводим сообщение ошибки авторизации. 
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
     console.log('results', results);
     setLoading(false);
     if(results.token) {
+      const storageName = 'loginStorage';
+      localStorage.setItem(storageName, JSON.stringify({
+        token: results.token,
+        userId: results.userId
+      }))
       setLogin(true);
     }
   };
@@ -36,12 +48,16 @@ const AuthForm = () => {
       const results = await authIn('/api/auth/register', 'POST', userForm);
       console.log(results);
       setLoading(false);
-  };  
+  }; 
+
+  useEffect(() => {
+    
+  })
 
   return (
     <div className="container-flex">
       {
-        login && <Redirect to="/home"/>
+        login && <Redirect to="/home"/> 
       }
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
         <Card title="Войдите в систему" extra={<a href="#">Безопасность</a>} style={{ width: 450}}>

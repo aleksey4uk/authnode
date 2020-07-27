@@ -26,9 +26,8 @@ const AddNews = ({onModal, setOnModal}) => {
                 setValueForm(s => ({...s, [id]: value}));
         }
     } 
-    const handleCancel = () => console.log('cancel');
+
     const onFinish = (e) => {
-        setOnModal(false);
         setValueForm({title: '', text:'', source: ''});
         setOnModal(false);
     }
@@ -40,7 +39,7 @@ const AddNews = ({onModal, setOnModal}) => {
             title="Введите Новость"
             visible={onModal}
             onOk={onFinish}
-            onCancel={handleCancel}
+            onCancel={onFinish}
         >
             <Card style={{width: "550px"}}>
                 <Form {...layout}>
