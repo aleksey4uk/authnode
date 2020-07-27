@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
 import { Form, Input, Button, Checkbox, Card } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 const layout = {
   labelCol: { span: 5 },
@@ -14,17 +15,16 @@ const tailLayout = {
 const AuthForm = () => {
   const [userForm, setUserForm] = useState({email: null, password: null});
   const [loading, setLoading] = useState(false);
+  const [login, setLogin] = useState(false);
 
   const onFinish = async (user)  => {
-    //1. Начинаем процесс загрузки, запускаем спиннер
-    //2. Отправялем наши данные на сервер
-    //3. Получаем ответ. 
-         //Если ок, то убирем спиннер загрузки и редеректим на главную страницу
-         //Если нет, то выводим сообщение ошибки авторизации. 
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
     console.log('results', results);
     setLoading(false);
+    if(results.token) {
+      setLogin(true);
+    }
   };
 
   const onFinishFailed = errorInfo => {
@@ -40,6 +40,9 @@ const AuthForm = () => {
 
   return (
     <div className="container-flex">
+      {
+        login && <Redirect to="/home"/>
+      }
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
         <Card title="Войдите в систему" extra={<a href="#">Безопасность</a>} style={{ width: 450}}>
         <Form

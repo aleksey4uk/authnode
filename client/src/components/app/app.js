@@ -1,7 +1,8 @@
 import React from 'react';
 import AuthPage from '../pages/authPage';
-import { CreateNews } from '../pages/createNews';
-import {Switch, Route} from 'react-router-dom';
+import {ErrorPage} from '../pages/errorPage';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import { HomePage } from '../pages/homePage';
 import 'antd/dist/antd.css';
 import './app.css';
 
@@ -9,9 +10,10 @@ function App(props) {
   return (
     <div className="App">
       <Switch>
-          <Route path='/news' component={CreateNews}/>
-          <Route path='/' component={AuthPage}/>
-      </Switch>
+          <Route path='/' exact component={AuthPage}/>
+          <Route path='/home' component={HomePage} />
+          <Route component={ErrorPage}/>
+        </Switch>
     </div>
   );
 }
