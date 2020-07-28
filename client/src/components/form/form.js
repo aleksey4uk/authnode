@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
 import { Form, Input, Button, Card } from 'antd';
@@ -41,10 +41,6 @@ const AuthForm = () => {
       await authIn('/api/auth/register', 'POST', userForm);
       setLoading(false);
   }; 
-
-  useEffect(() => {
-    
-  })
 
   return (
     <div className="container-flex">

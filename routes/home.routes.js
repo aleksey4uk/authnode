@@ -4,7 +4,7 @@ const router = Router();
 
 //get home page;
 router.get('/', auth, async (req, res) => {
-   res.json({message: 'Токен есть, можно Получать данные'})
+   res.json({message: 'Токен есть, можно Получать данные '})
 })
 
 module.exports = router;

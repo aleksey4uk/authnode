@@ -13,12 +13,6 @@ const { Header, Content, Sider, Footer } = Layout;
 const HomePage = () => {
     const [onModal, setOnModal] = useState(false);
     const history = useHistory();
-    
-    //1. Перед тем, как загрузить страницу мы отправляем запрос на сервер с нашим токеном. 
-    //2. Сервер проверяет тот ли это токен. 
-    //3. Если тот, то сервер отдает данные из БД
-    //4. Мы записываем данные в state и обновяем страницу. 
-    //5. Если токен не подходит, то отправляем сообщение с ошибкой и редеректим обратно
 
     useEffect( () => {
         getDate()
@@ -29,7 +23,7 @@ const HomePage = () => {
     const getDate = async () => {
         const {token} = JSON.parse(localStorage.getItem('loginStorage'));
         const res = await getNews('/api/home', JSON.stringify(token));
-        console.log('Наши данные с сервера', res )   
+        return res;   
     }
 
     const logOut = () => {
