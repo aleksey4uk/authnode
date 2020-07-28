@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/api/auth', auth);
-app.use('/api/home', home);
+app.use('/api/', home);
 
 const start = async () => {
     try {

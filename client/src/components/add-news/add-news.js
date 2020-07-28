@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { addNews } from '../../services/swapi-service';
 import { Modal, Form, Input,Card } from 'antd';
+import {connect} from 'react-redux';
 
 const layout = {
     labelCol: {
@@ -11,8 +13,10 @@ const layout = {
 };
 
   
-const AddNews = ({onModal, setOnModal}) => {
-    const [valueForm, setValueForm] = useState({title: '', text:'', source: ''});
+const AddNews = ({onModal, setOnModal, addItemNews}) => {
+    const [valueForm, setValueForm] = useState({title: '', text:''});
+    const [allDataNews, setAllDataNews] = useState([]);
+
     const editValueForm = (e) => {
         const {id, value} = e.target;
         switch(id) {
@@ -23,19 +27,28 @@ const AddNews = ({onModal, setOnModal}) => {
         }
     } 
 
-    const onFinish = (e) => {
-        setValueForm({title: '', text:'', source: ''});
+    const onFinish = async (e) => {
+        const {token} = JSON.parse(localStorage.getItem('loginStorage'));
+        const result = await addNews('/api/add', valueForm, JSON.stringify(token));
+        if (result.ok) addItemNews(valueForm)
+
+        setValueForm({title: '', text:''});
+        setOnModal(false);
+    }
+
+    const onCancel = () => {
+        setValueForm({title: '', text:''});
         setOnModal(false);
     }
    
-    const {title, text, source} = valueForm;
+    const {title, text} = valueForm;
     return (
         <Modal
             width='600px'
             title="Введите Новость"
             visible={onModal}
             onOk={onFinish}
-            onCancel={onFinish}
+            onCancel={onCancel}
         >
             <Card style={{width: "550px"}}>
                 <Form {...layout}>
@@ -43,10 +56,6 @@ const AddNews = ({onModal, setOnModal}) => {
                         label="Заголовок"
                         rules={[{required: true}]}>
                         <Input id="title" onChange={editValueForm} value={title}/>
-                    </Form.Item>
-
-                    <Form.Item label="Источник">
-                        <Input id="source" onChange={editValueForm} value={source}/>
                     </Form.Item>
 
                     <Form.Item 
@@ -67,4 +76,10 @@ const AddNews = ({onModal, setOnModal}) => {
     );
 };
 
-export { AddNews };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemNews: (payload) => dispatch({type: 'ADD-ITEM-NEWS', payload})
+    }
+} 
+
+export default connect(null, mapDispatchToProps)(AddNews);

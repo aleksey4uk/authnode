@@ -1,36 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
 import { List, Avatar, Card } from 'antd';
 import './news.-list.css';
 
-const data = [
-  {
-    title: 'Ant Design Title 1',
-    text: 'Ant Design, a design language for background applications, is refined by Ant UED Team'
-  },
-  {
-    title: 'Ant Design Title 1',
-    text: 'Ant Design, a design language for background applications, is refined by Ant UED Team'
-  },
-  {
-    title: 'Ant Design Title 1',
-    text: 'Ant Design, a design language for background applications, is refined by Ant UED Team'
-  },
-  {
-    title: 'Ant Design Title 1',
-    text: 'Ant Design, a design language for background applications, is refined by Ant UED Team'
-  },
-  {
-    title: 'Ant Design Title 1',
-    text: 'Ant Design, a design language for background applications, is refined by Ant UED Team'
-  },
-];
-
-const NewsList = () => {
+const NewsList = (props) => {
+    if(!props.news) return <h1>loading...</h1>
     return (
         <List
             itemLayout="horizontal"
-            dataSource={data}
+            dataSource={props.news}
             renderItem={item => (
                 <Card className='list-card' >
                     <List.Item extra={<a href="/">Подробнее</a>}>
@@ -46,4 +25,10 @@ const NewsList = () => {
     );
 }
 
-export { NewsList };
+const mapStateToProps = (state) => {
+  return {
+      ...state,
+  }
+};
+
+export default connect(mapStateToProps)(NewsList);

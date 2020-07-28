@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined } from '@ant-design/icons';
@@ -10,13 +11,14 @@ import { getNews } from '../../services/swapi-service';
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-const HomePage = () => {
+const HomePage = (props) => {
+    const {writeNews} = props;
     const [onModal, setOnModal] = useState(false);
     const history = useHistory();
 
     useEffect( () => {
         getDate()
-            .then(console.log)
+            .then(res => writeNews(res))
             .catch((e) => console.log('ошибка с сервера', e.message))
     }, [ ]);
 
@@ -50,10 +52,10 @@ const HomePage = () => {
             <Layout>
             <Sider width={300} className="site-layout-background">
                 <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
+                    mode="inline"
+                    defaultSelectedKeys={['1']}
+                    defaultOpenKeys={['sub1']}
+                    style={{ height: '100%', borderRight: 0 }}
                 >
                 <SubMenu key="sub1" icon={<UserOutlined />} title="Пользователь">
                     <Menu.Item key="1">Статьи пользователя</Menu.Item>
@@ -72,15 +74,14 @@ const HomePage = () => {
                 </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
-
                 <Content
-                className="site-layout-background"
-                style={{
-                    padding: 24,
-                    margin: 0,
-                    minHeight: 280,
-                    height: 1000
-                }}
+                    className="site-layout-background"
+                    style={{
+                        padding: 24,
+                        margin: 0,
+                        minHeight: 280,
+                        height: 1000
+                    }}
                 >
                 <h2>Все статьи</h2>
                 <NewsList />
@@ -93,4 +94,10 @@ const HomePage = () => {
     )
 }
 
-export { HomePage };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        writeNews: (payload) => dispatch({type: 'WRITE-NEWS', payload})
+    }
+}
+
+export default connect(null, mapDispatchToProps)(HomePage);

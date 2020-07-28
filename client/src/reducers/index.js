@@ -1,11 +1,22 @@
 const initianalState = {
-    news: null
+    news: null,
 }
 
 const reducer = (state=initianalState, action) => {
     switch(action.type) {
-        case 'TEST_REDUCER': 
-            return console.log('test');
+        case 'WRITE-NEWS': 
+            return {
+                ...state,
+                news: action.payload
+            }
+        case 'ADD-ITEM-NEWS': 
+            return {
+                ...state,
+                news: [
+                    ...state.news,
+                    action.payload
+                ]
+            }
         default: return state
     }
 }
