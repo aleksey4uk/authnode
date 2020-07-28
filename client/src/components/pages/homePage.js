@@ -1,22 +1,39 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined } from '@ant-design/icons';
-import { Layout, Menu, Breadcrumb, Modal, Button } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import AddNews from '../add-news';
+import { getNews } from '../../services/swapi-service';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
 const HomePage = () => {
-    const [login, setLogin] = useState(false);
     const [onModal, setOnModal] = useState(false);
-    const history = useHistory();    
+    const history = useHistory();
+    
+    //1. Перед тем, как загрузить страницу мы отправляем запрос на сервер с нашим токеном. 
+    //2. Сервер проверяет тот ли это токен. 
+    //3. Если тот, то сервер отдает данные из БД
+    //4. Мы записываем данные в state и обновяем страницу. 
+    //5. Если токен не подходит, то отправляем сообщение с ошибкой и редеректим обратно
+
+    useEffect( () => {
+        getDate()
+            .then(console.log)
+            .catch((e) => console.log('ошибка с сервера', e.message))
+    }, [ ]);
+
+    const getDate = async () => {
+        const {token} = JSON.parse(localStorage.getItem('loginStorage'));
+        const res = await getNews('/api/home', JSON.stringify(token));
+        console.log('Наши данные с сервера', res )   
+    }
 
     const logOut = () => {
         localStorage.removeItem('loginStorage');
-        setLogin(false);
         history.push('/')
     }
 
@@ -24,6 +41,7 @@ const HomePage = () => {
     if(!token) {
         return <Redirect to="/"/>
     }
+
 
     return (
         <Layout>

@@ -5,8 +5,7 @@ const initianalState = {
 const reducer = (state=initianalState, action) => {
     switch(action.type) {
         case 'TEST_REDUCER': 
-            console.log('test');
-
+            return console.log('test');
         default: return state
     }
 }

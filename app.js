@@ -3,11 +3,13 @@ const config = require('config');
 const auth = require('./routes/auth.routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const home = require('./routes/home.routes');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use('/api/auth', auth);
+app.use('/api/home', home);
 
 const start = async () => {
     try {

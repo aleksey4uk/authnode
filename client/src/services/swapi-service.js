@@ -9,27 +9,30 @@ const authIn = async (url="/api/", method={}, body=null) => {
           'Content-Type': 'application/json'
         }
       })
-    //if(!response.ok) return {logedIn: false };
+
     return await response.json();
+    
   } catch(e) {
     console.log('Sorry, there was an error.', e.message);
   } 
 }
 
-const postFormNews = async (url, method={}, body=null) => {
+const getNews = async (url, token) => {
   try {
     const response = await fetch(url, {
-        method, 
-        body: JSON.stringify(body),
+        method: 'GET', 
+        body: null,
         headers: {
+          authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       })
-    //if(!response.ok) return {logedIn: false };
-    return await response.json();
+      
+    return response.json();
+  
   } catch(e) {
     console.log('Sorry, there was an error.', e.message);
   } 
 }
 
-export { authIn, postFormNews };
+export { authIn, getNews };

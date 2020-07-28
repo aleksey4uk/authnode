@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {useHistory} from 'react-router-dom';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
-import { Form, Input, Button, Checkbox, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 const layout = {
@@ -14,17 +13,11 @@ const tailLayout = {
 };
 
 const AuthForm = () => {
-  const history = useHistory();
   const [userForm, setUserForm] = useState({email: null, password: null});
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
 
   const onFinish = async (user)  => {
-    //1. Начинаем процесс загрузки, запускаем спиннер
-    //2. Отправялем наши данные на сервер
-    //3. Получаем ответ. 
-         //Если ок, то убирем спиннер загрузки и редеректим на главную страницу
-         //Если нет, то выводим сообщение ошибки авторизации. 
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
     console.log('results', results);
@@ -45,8 +38,7 @@ const AuthForm = () => {
 
   const onRegister = async () => {
       setLoading(true);
-      const results = await authIn('/api/auth/register', 'POST', userForm);
-      console.log(results);
+      await authIn('/api/auth/register', 'POST', userForm);
       setLoading(false);
   }; 
 
@@ -60,7 +52,7 @@ const AuthForm = () => {
         login && <Redirect to="/home"/> 
       }
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
-        <Card title="Войдите в систему" extra={<a href="#">Безопасность</a>} style={{ width: 450}}>
+        <Card title="Войдите в систему" extra={<a href="/">Безопасность</a>} style={{ width: 450}}>
         <Form
           {...layout}
           name="basic"

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Form, Input, InputNumber, Button, Card } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Form, Input,Card } from 'antd';
 
 const layout = {
     labelCol: {
@@ -9,13 +9,7 @@ const layout = {
       span: 16,
     },
 };
-const validateMessages = {
-required: '${label} is required!',
-types: {
-    email: '${label} is not validate email!',
-    number: '${label} is not a validate number!',
-},
-};
+
   
 const AddNews = ({onModal, setOnModal}) => {
     const [valueForm, setValueForm] = useState({title: '', text:'', source: ''});
@@ -24,6 +18,8 @@ const AddNews = ({onModal, setOnModal}) => {
         switch(id) {
             case `${id}`: 
                 setValueForm(s => ({...s, [id]: value}));
+                break;
+            default: return console.log("default")
         }
     } 
 

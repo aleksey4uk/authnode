@@ -10,7 +10,7 @@
 
 .container-flex {
     position: absolute;
-    margin-left: -200px;
+    margin-left: -225px;
     left: 50%;
     top: 50%;
     margin-top: -170px;
@@ -21,4 +21,11 @@ body {
     z-index: 1000;
     background-image: url('https://cs8.pikabu.ru/post_img/big/2016/03/19/9/145840139014918771.jpg');
     background-size: cover;
+}
+
+.ant-alert-error {
+    width: 450px !important;
+    margin: 0 auto;
+    position: fixed;
+    z-index: 99999;  
 }
