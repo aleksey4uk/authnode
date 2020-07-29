@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Redirect, useRouteMatch, useParams } from 'react-router-dom';
 import  NewsList from '../news-list';
-import { StarOutlined } from '@ant-design/icons';
+import { StarOutlined, UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import AddNews from '../add-news';
 import { getNews } from '../../services/swapi-service';
 import DetailNews from '../detail-news';
@@ -23,7 +22,6 @@ const HomePage = (props) => {
         getDate()
             .then(res => writeNews(res))
             .catch((e) => console.log('ошибка с сервера', e.message));
-        console.log(id)
     }, [  ]);
 
     useEffect( () => {
@@ -47,20 +45,14 @@ const HomePage = (props) => {
         return <Redirect to="/"/>
     }
 
-    const content = showDetailNews ? <DetailNews /> : (
-        <>
-            <h2>Все статьи</h2>
-            <NewsList />
-        </>
-    )
+    const content = showDetailNews ? <DetailNews id={id} setShowDetailNews={setShowDetailNews}/> : <NewsList />
 
     return (
-        <Layout>
+        <Layout className="home">
             <Header>
             <div className="logo"/>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+            <Menu theme="dark" mode="horizontal" >
                 <Menu.Item key="1"><StarOutlined/>Главная</Menu.Item>
-                <Menu.Item key="2">Погода</Menu.Item>
                 
             </Menu>
             </Header>
@@ -94,7 +86,6 @@ const HomePage = (props) => {
                     style={{
                         padding: 24,
                         margin: 0,
-                        minHeight: 280,
                         height: 1000
                     }}
                 >

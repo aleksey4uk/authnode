@@ -1,12 +1,20 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-const DetailNews = () => {
+const DetailNews = ({news}) => {
     const {id} = useParams();
-    console.log(id)
+    
+    if(!news) return (<h1>Загрузка...</h1>);
+    const {title, text} = news.filter(item=>item._id === id)[0];
+    
     return (
-        <p>Детали новости</p>
+        <div>
+            <p>{title}</p>
+        </div>
     )
 }
 
-export default DetailNews;
+const mapStateToProps = (state) => ({...state})
+
+export default connect(mapStateToProps)(DetailNews);

@@ -9,6 +9,8 @@ const NewsList = (props) => {
     const history = useHistory();
     if(!props.news) return <h1>loading...</h1>
     return (
+        <>
+        <h2>Все статьи</h2>
         <List
             itemLayout="horizontal"
             dataSource={props.news}
@@ -24,6 +26,7 @@ const NewsList = (props) => {
                 </Card>
             )}
         />
+        </>
     );
 }
 
