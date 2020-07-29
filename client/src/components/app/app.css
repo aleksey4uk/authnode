@@ -29,3 +29,8 @@ body {
     position: fixed;
     z-index: 99999;  
 }
+
+.wrap-text {
+    max-width: 800px !important;
+    white-space: normal !important;
+}
