@@ -19,7 +19,11 @@ router.get('/home', auth, async (req, res) => {
 router.post('/add', auth, async (req, res) => {
 
    try {
-      const {title, text} = req.body; 
+      const {title, text} = req.body;
+      if(title.length <= 3 || text.length <= 10) {
+         return res.status(201).json({message: "Извините, произошла ошибка"});
+      } 
+      
       const id = req.user.userId;
 
       const news = new News({ title, text,  owner: id});

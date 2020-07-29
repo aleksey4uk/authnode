@@ -30,7 +30,7 @@ const AddNews = ({onModal, setOnModal, addItemNews}) => {
     const onFinish = async (e) => {
         const {token} = JSON.parse(localStorage.getItem('loginStorage'));
         const result = await addNews('/api/add', valueForm, JSON.stringify(token));
-        if (result.ok) addItemNews(valueForm)
+        if (result.status === 200) addItemNews(valueForm)
 
         setValueForm({title: '', text:''});
         setOnModal(false);

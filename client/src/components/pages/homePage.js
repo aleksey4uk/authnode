@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, useRouteMatch, useParams } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import AddNews from '../add-news';
 import { getNews } from '../../services/swapi-service';
+import DetailNews from '../detail-news';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
 const HomePage = (props) => {
     const {writeNews} = props;
+    const [showDetailNews, setShowDetailNews] = useState(false);
     const [onModal, setOnModal] = useState(false);
     const history = useHistory();
+    const { id } = useParams();
 
     useEffect( () => {
         getDate()
             .then(res => writeNews(res))
-            .catch((e) => console.log('ошибка с сервера', e.message))
-    }, [ ]);
+            .catch((e) => console.log('ошибка с сервера', e.message));
+        console.log(id)
+    }, [  ]);
+
+    useEffect( () => {
+        id && setShowDetailNews(true);
+    }, [ id ])
 
     const getDate = async () => {
         const {token} = JSON.parse(localStorage.getItem('loginStorage'));
@@ -34,10 +42,17 @@ const HomePage = (props) => {
     }
 
     const token = localStorage.getItem('loginStorage');
+
     if(!token) {
         return <Redirect to="/"/>
     }
 
+    const content = showDetailNews ? <DetailNews /> : (
+        <>
+            <h2>Все статьи</h2>
+            <NewsList />
+        </>
+    )
 
     return (
         <Layout>
@@ -83,12 +98,11 @@ const HomePage = (props) => {
                         height: 1000
                     }}
                 >
-                <h2>Все статьи</h2>
-                <NewsList />
+                {content}
                 </Content>
             </Layout>
             </Layout>
-                <AddNews setOnModal={setOnModal} onModal={onModal} />
+            <AddNews setOnModal={setOnModal} onModal={onModal} />
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
     )
