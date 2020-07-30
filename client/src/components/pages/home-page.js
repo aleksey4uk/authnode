@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, Redirect, useRouteMatch, useParams } from 'react-router-dom';
+import { useHistory, Redirect, useParams } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined, UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
@@ -12,7 +12,7 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
 const HomePage = (props) => {
-    const {writeNews} = props;
+    const {writeNews, loadNews, loadComplete} = props;
     const [showDetailNews, setShowDetailNews] = useState(false);
     const [onModal, setOnModal] = useState(false);
     const history = useHistory();
@@ -20,9 +20,16 @@ const HomePage = (props) => {
 
     useEffect( () => {
         getDate()
+            .then((res) => {
+                loadNews();
+                return res;
+            })
             .then(res => writeNews(res))
-            .catch((e) => console.log('ошибка с сервера', e.message));
-    }, [  ]);
+            .catch((e) => {
+                loadComplete()
+                console.log('ошибка с сервера', e.message);
+            });
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect( () => {
         id && setShowDetailNews(true);
@@ -101,7 +108,9 @@ const HomePage = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        writeNews: (payload) => dispatch({type: 'WRITE-NEWS', payload})
+        writeNews: (payload) => dispatch({type: 'WRITE-NEWS', payload}),
+        loadNews: () => dispatch({type: 'LOAD-NEWS'}),
+        loadComplete: () => dispatch({type: 'LOAD-COMPLETE'})
     }
 }
 

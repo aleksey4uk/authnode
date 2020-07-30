@@ -20,7 +20,6 @@ const AuthForm = () => {
   const onFinish = async (user)  => {
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
-    console.log('results', results);
     setLoading(false);
     if(results.token) {
       const storageName = 'loginStorage';

@@ -32,6 +32,7 @@ const getNews = async (url, token) => {
   
   } catch(e) {
     console.log('Sorry, there was an error.', e.message);
+    throw new Error(e)
   } 
 }
 

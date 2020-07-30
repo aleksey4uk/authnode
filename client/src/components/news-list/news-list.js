@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import { List, Avatar, Card } from 'antd';
+
+import img from '../../img/hotpng.com (1).png';
 import './news.-list.css';
 
 const NewsList = (props) => {
@@ -18,7 +20,7 @@ const NewsList = (props) => {
                 <Card className='list-card' onClick={() => history.push(`/home/${item._id}`)}>
                     <List.Item extra={<a href="/">Подробнее</a>}>
                         <List.Item.Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                            avatar={<Avatar src={img} />}
                             title={<a href="https://ant.design">{item.title}</a>}
                             description={item.text}
                         />

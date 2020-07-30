@@ -15,6 +15,19 @@ router.get('/home', auth, async (req, res) => {
    }
 })
 
+//get one news
+router.get('/home/:id', auth, async (req, res) => {   
+   try {
+      const urlId = req.params.id;
+      const oneNews = await News.findById({_id: urlId});
+      console.log(oneNews);
+
+      res.json(oneNews);
+   } catch {
+      return res.status(500).json({ message: 'Что пошло не так, попробуйте позже' });
+   }
+})
+
 //add news to mongo;
 router.post('/add', auth, async (req, res) => {
 

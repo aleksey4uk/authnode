@@ -1,5 +1,6 @@
 const initianalState = {
     news: null,
+    loading: false,
 }
 
 const reducer = (state=initianalState, action) => {
@@ -7,8 +8,10 @@ const reducer = (state=initianalState, action) => {
         case 'WRITE-NEWS': 
             return {
                 ...state,
+                loading: false,
                 news: action.payload
             }
+
         case 'ADD-ITEM-NEWS': 
             return {
                 ...state,
@@ -17,6 +20,19 @@ const reducer = (state=initianalState, action) => {
                     action.payload
                 ]
             }
+
+        case 'LOAD-NEWS': 
+            return {
+                ...state,
+                loading: true 
+            }
+
+        case 'LOAD-COMPLETE': 
+            return {
+                ...state,
+                loading: false 
+            }      
+              
         default: return state
     }
 }

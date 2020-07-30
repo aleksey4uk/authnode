@@ -15,7 +15,6 @@ const layout = {
   
 const AddNews = ({onModal, setOnModal, addItemNews}) => {
     const [valueForm, setValueForm] = useState({title: '', text:''});
-    const [allDataNews, setAllDataNews] = useState([]);
 
     const editValueForm = (e) => {
         const {id, value} = e.target;
