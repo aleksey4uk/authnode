@@ -1,23 +1,28 @@
 import React from 'react';
-import AuthPage from '../pages/authPage';
-import {Switch} from 'react-router-dom';
-import { Card } from 'antd';
-import {connect} from 'react-redux';
-import 'antd/dist/antd.css';
-import './app.css'
+import {Switch, Route} from 'react-router-dom';
+import AuthPage from '../pages/auth-page';
+import {ErrorPage} from '../pages/error-page';
+import HomePage from '../pages/home-page';
+import AddNews from '../add-news'
+import DetailPage from '../pages/detail-page';
 
-function App(props) {
+import 'antd/dist/antd.css';
+import './app.css';
+
+function App() {
   return (
     <div className="App">
-          <AuthPage/>
+      <Switch>
+          <Route path='/' exact component={AuthPage}/>
+          <Route path='/home' exact component={HomePage} />
+          <Route path='/home/:id'>
+            <DetailPage/>
+          </Route> 
+          <Route path='/news' component={AddNews}/>
+          <Route component={ErrorPage}/>
+        </Switch>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ...state
-  }
-} 
-
-export default connect(mapStateToProps)(App);
+export default App;

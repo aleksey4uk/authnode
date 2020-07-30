@@ -1,8 +1,5 @@
 # node_modules
 /node_modules
 
-#config 
-/config
-
 #client 
 /client/node_modules

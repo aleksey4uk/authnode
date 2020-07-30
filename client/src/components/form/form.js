@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
-import { Form, Input, Button, Checkbox, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 const layout = {
   labelCol: { span: 5 },
@@ -12,19 +13,22 @@ const tailLayout = {
 };
 
 const AuthForm = () => {
-  const [userForm, setUserForm] = useState({email: null, password: null});
+  const [userForm, setUserForm] = useState({email: '', password: ''});
   const [loading, setLoading] = useState(false);
+  const [login, setLogin] = useState(false);
 
   const onFinish = async (user)  => {
-    //1. Начинаем процесс загрузки, запускаем спиннер
-    //2. Отправялем наши данные на сервер
-    //3. Получаем ответ. 
-         //Если ок, то убирем спиннер загрузки и редеректим на главную страницу
-         //Если нет, то выводим сообщение ошибки авторизации. 
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
-    console.log('results', results);
     setLoading(false);
+    if(results.token) {
+      const storageName = 'loginStorage';
+      localStorage.setItem(storageName, JSON.stringify({
+        token: results.token,
+        userId: results.userId
+      }))
+      setLogin(true);
+    }
   };
 
   const onFinishFailed = errorInfo => {
@@ -33,38 +37,43 @@ const AuthForm = () => {
 
   const onRegister = async () => {
       setLoading(true);
-      const results = await authIn('/api/auth/register', 'POST', userForm);
-      console.log(results);
+      await authIn('/api/auth/register', 'POST', userForm);
       setLoading(false);
-  };  
+  }; 
+
+  const editValue = (e) => {
+    const { id, value }  = e.target;
+    setUserForm((s) => ({...s, [id]: value}))
+  }
 
   return (
     <div className="container-flex">
+      {
+        login && <Redirect to="/home"/> 
+      }
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
-        <Card title="Войдите в систему" extra={<a href="#">Безопасность</a>} style={{ width: 450}}>
+        <Card title="Войдите в систему" style={{ width: 450}}>
         <Form
           {...layout}
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
+          onFinish={()=>onFinish(userForm)}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Email"
-            name="email"
-            onChange={(event) => setUserForm((state) => ({...state, email: event.target.value}))}
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш email' }]}
           >
-            <Input />
+            <Input
+              id="email"
+              value={userForm.email}
+              onChange={editValue}/>
           </Form.Item>
 
           <Form.Item
             label="Password"
-            name="password"
-            onChange={(event) => setUserForm((state) => ({...state, password: event.target.value}))}
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш  пароль' }]}
           >
-            <Input.Password />
+            <Input.Password 
+              id="password"
+              value={userForm.password}
+              onChange={editValue}/>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
@@ -83,11 +92,5 @@ const AuthForm = () => {
     </div>
   );
 };
-
-
-/*form.item(запомнить меня)           <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>Запомнить меня</Checkbox>
-            </Form.Item>
-*/  
 
 export default AuthForm;
