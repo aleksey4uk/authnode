@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { addNews } from '../../services/swapi-service';
 import { Modal, Form, Input,Card } from 'antd';
-import {connect} from 'react-redux';
+import { getToken } from '../../utils/utils';
+
 
 const layout = {
     labelCol: {
@@ -27,10 +29,12 @@ const AddNews = ({onModal, setOnModal, addItemNews}) => {
     } 
 
     const onFinish = async (e) => {
-        const {token} = JSON.parse(localStorage.getItem('loginStorage'));
-        const result = await addNews('/api/add', valueForm, JSON.stringify(token));
-        if (result.status === 200) addItemNews(valueForm)
-
+        const result = await addNews('/api/add', valueForm, getToken());
+        
+        if (result.status === 200) {
+            const {_id} = await result.json();
+            addItemNews({...valueForm, _id});
+        }
         setValueForm({title: '', text:''});
         setOnModal(false);
     }

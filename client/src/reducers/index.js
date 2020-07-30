@@ -13,6 +13,8 @@ const reducer = (state=initianalState, action) => {
             }
 
         case 'ADD-ITEM-NEWS': 
+            console.log(action.payload)
+            console.log(state)
             return {
                 ...state,
                 news: [

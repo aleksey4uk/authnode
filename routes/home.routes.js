@@ -43,7 +43,7 @@ router.post('/add', auth, async (req, res) => {
 
       const results = await news.save();
 
-      res.json({load: true});
+      res.json({_id: news._id});
 
    } catch(e) {
       res.status(201).json({message: "Извините, произошла ошибка"});
