@@ -43,7 +43,6 @@ const AuthForm = () => {
 
   const editValue = (e) => {
     const { id, value }  = e.target;
-    console.log(value)
     setUserForm((s) => ({...s, [id]: value}))
   }
 
@@ -53,7 +52,7 @@ const AuthForm = () => {
         login && <Redirect to="/home"/> 
       }
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
-        <Card title="Войдите в систему" extra={<a href="/">Безопасность</a>} style={{ width: 450}}>
+        <Card title="Войдите в систему" style={{ width: 450}}>
         <Form
           {...layout}
           onFinish={()=>onFinish(userForm)}
@@ -61,7 +60,6 @@ const AuthForm = () => {
         >
           <Form.Item
             label="Email"
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш email' }]}
           >
             <Input
               id="email"
