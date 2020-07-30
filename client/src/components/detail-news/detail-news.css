@@ -1,0 +1,9 @@
+.news-img {
+    border: 1px solid black;
+    width: 500px;
+    height: 340px;
+    background-image: url('http://kingisepp.ru/images/news/block/3371b.jpg');
+    background-size: contain;
+    background-position: center;
+
+}

@@ -4,8 +4,11 @@ import { useParams } from 'react-router-dom';
 import {getToken} from '../../utils/utils';
 import {getNews} from '../../services/swapi-service';
 
-import { Typography } from 'antd';
-const {Text, Title} = Typography;
+import { Typography, Card } from 'antd';
+import './detail-news.css';
+
+const {Text, Title } = Typography;
+const { Meta } = Card
 
 const DetailNews = ({news}) => {
     const {id} = useParams();
@@ -31,7 +34,10 @@ const DetailNews = ({news}) => {
     return (
         <div className="wrap-text">
             <Title level={2}>{itemNews.title}</Title>
-            <Text style={{paddingBottom: 100}}>22.02.10</Text>
+            <div className="details-news-img">
+                <div className="news-img"></div>
+                <Text style={{paddingBottom: 100}}>22.02.10</Text>
+            </div>        
             <br/>
             <Text>{itemNews.text}</Text>
         </div>

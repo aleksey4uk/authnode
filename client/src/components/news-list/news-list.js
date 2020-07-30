@@ -17,7 +17,11 @@ const NewsList = (props) => {
             itemLayout="horizontal"
             dataSource={props.news}
             renderItem={item => (
-                <Card className='list-card' onClick={() => history.push(`/home/${item._id}`)}>
+                <Card 
+                    className='list-card' 
+                    hoverable 
+                    onClick={() => history.push(`/home/${item._id}`)}
+                    >
                     <List.Item extra={<a href="/">Подробнее</a>}>
                         <List.Item.Meta
                             avatar={<Avatar src={img} />}
