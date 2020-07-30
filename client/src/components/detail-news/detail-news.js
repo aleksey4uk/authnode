@@ -30,7 +30,7 @@ const DetailNews = ({news}) => {
          }
     }
     
-    if(!itemNews.text) return <h1>Loading...</h1>    
+    if(itemNews.text === undefined) return <h1>Loading...</h1>    
     return (
         <div className="wrap-text">
             <Title level={2}>{itemNews.title}</Title>
