@@ -20,7 +20,6 @@ router.get('/home/:id', auth, async (req, res) => {
    try {
       const urlId = req.params.id;
       const oneNews = await News.findById({_id: urlId});
-      console.log(oneNews);
 
       res.json(oneNews);
    } catch {
