@@ -13,7 +13,7 @@ const tailLayout = {
 };
 
 const AuthForm = () => {
-  const [userForm, setUserForm] = useState({email: null, password: null});
+  const [userForm, setUserForm] = useState({email: '', password: ''});
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
 
@@ -41,6 +41,12 @@ const AuthForm = () => {
       setLoading(false);
   }; 
 
+  const editValue = (e) => {
+    const { id, value }  = e.target;
+    console.log(value)
+    setUserForm((s) => ({...s, [id]: value}))
+  }
+
   return (
     <div className="container-flex">
       {
@@ -50,27 +56,26 @@ const AuthForm = () => {
         <Card title="Войдите в систему" extra={<a href="/">Безопасность</a>} style={{ width: 450}}>
         <Form
           {...layout}
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
+          onFinish={()=>onFinish(userForm)}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Email"
-            name="email"
-            onChange={(event) => setUserForm((state) => ({...state, email: event.target.value}))}
             rules={[{ required: true, message: 'Пожалуйста, введите ваш email' }]}
           >
-            <Input />
+            <Input
+              id="email"
+              value={userForm.email}
+              onChange={editValue}/>
           </Form.Item>
 
           <Form.Item
             label="Password"
-            name="password"
-            onChange={(event) => setUserForm((state) => ({...state, password: event.target.value}))}
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш  пароль' }]}
           >
-            <Input.Password />
+            <Input.Password 
+              id="password"
+              value={userForm.password}
+              onChange={editValue}/>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
@@ -89,11 +94,5 @@ const AuthForm = () => {
     </div>
   );
 };
-
-
-/*form.item(запомнить меня)           <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>Запомнить меня</Checkbox>
-            </Form.Item>
-*/  
 
 export default AuthForm;
