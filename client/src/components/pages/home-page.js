@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, Redirect, useParams } from 'react-router-dom';
+import { useHistory, Redirect, useParams, Link } from 'react-router-dom';
 import  NewsList from '../news-list';
 import { StarOutlined, UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
@@ -59,7 +59,7 @@ const HomePage = (props) => {
             <Header>
             <div className="logo"/>
             <Menu theme="dark" mode="horizontal" >
-                <Menu.Item key="1"><StarOutlined/>Главная</Menu.Item>
+                <Menu.Item key="1"><StarOutlined/><Link to="/">Главная</Link></Menu.Item>
                 
             </Menu>
             </Header>
