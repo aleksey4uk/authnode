@@ -44,7 +44,7 @@ const AddNews = ({onModal, setOnModal, addItemNews}) => {
         setOnModal(false);
     }
    
-    const {title, text} = valueForm;
+    const {title, text, img} = valueForm;
     return (
         <Modal
             width='600px'
@@ -60,7 +60,6 @@ const AddNews = ({onModal, setOnModal, addItemNews}) => {
                         rules={[{required: true}]}>
                         <Input id="title" onChange={editValueForm} value={title}/>
                     </Form.Item>
-
                     <Form.Item 
                         label="Тест новости"
                         rules={[
