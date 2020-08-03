@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Redirect, useParams, Link } from 'react-router-dom';
 import  NewsList from '../news-list';
-import { StarOutlined, UserOutlined, LaptopOutlined } from '@ant-design/icons';
+import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import AddNews from '../add-news';
 import { getNews } from '../../services/swapi-service';
@@ -60,7 +60,12 @@ const HomePage = (props) => {
             <div className="logo"/>
             <Menu theme="dark" mode="horizontal" >
                 <Menu.Item key="1"><StarOutlined/><Link to="/">Главная</Link></Menu.Item>
-                
+                <Menu.Item 
+                    key="2" 
+                    style={{float: 'right'}}
+                    onClick={logOut}
+                >
+                    <LogoutOutlined/><Link to="/">Выйти</Link></Menu.Item> 
             </Menu>
             </Header>
             <Layout>
