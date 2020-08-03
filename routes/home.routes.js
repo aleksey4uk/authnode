@@ -60,6 +60,17 @@ router.post('/add', auth, async (req, res) => {
    }   
 })
 
+router.delete('/home/delete', auth, async (req, res) => {
+   try {
+      const {id} = req.body;   
+      const deletes = await News.deleteOne({_id: id});
+      
+      res.json(deletes);
+   } catch {
+      return res.status(500).json({ message: 'Что пошло не так, попробуйте позже' });
+   }
+
+})
 //remove news item 
 
 
