@@ -44,7 +44,7 @@ const AddNews = ({onModal, setOnModal, addItemNews}) => {
         setOnModal(false);
     }
    
-    const {title, text, img} = valueForm;
+    const {title, text} = valueForm;
     return (
         <Modal
             width='600px'
