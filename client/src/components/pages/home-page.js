@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Redirect, useParams, Link } from 'react-router-dom';
 import  NewsList from '../news-list';
-import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import DetailNews from '../detail-news';
 import AddNews from '../add-news';
 import { getNews } from '../../services/swapi-service';
-import DetailNews from '../detail-news';
+import { getToken } from '../../utils/utils';
+import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -31,19 +32,28 @@ const HomePage = (props) => {
             });
     }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
+    //Отображение деталей Новости
     useEffect( () => {
         id && setShowDetailNews(true);
     }, [ id ])
 
-    const getDate = async () => {
-        const {token} = JSON.parse(localStorage.getItem('loginStorage'));
-        const res = await getNews('/api/home', JSON.stringify(token));
+    //Получение новостей пользователя
+    const getDate = async (url='/api/home') => {
+        const res = await getNews(url, getToken());
         return res;   
     }
 
+    //Выход с сайта, удаление токена.
     const logOut = () => {
         localStorage.removeItem('loginStorage');
         history.push('/')
+    }
+
+    //Получение новостей всех пользователей
+    const getNewsAllUsers = (url) => {
+        getDate(url)
+            .then(writeNews)
+            .catch(()=>console.log('Извините, произошла ошибка'))
     }
 
     const token = localStorage.getItem('loginStorage');
@@ -88,7 +98,11 @@ const HomePage = (props) => {
                         onClick={logOut}>Выйти из уч. записи</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">
-                    <Menu.Item key="5">Все статьи</Menu.Item>
+                    <Menu.Item 
+                        onClick={()=>{getNewsAllUsers('/api/home/all')}} 
+                        key="5"
+                    >
+                        Все статьи</Menu.Item>
                 </SubMenu>
                 </Menu>
             </Sider>
