@@ -2,7 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import { List, Avatar, Card } from 'antd';
+import { List, Avatar, Card, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import img from '../../img/hotpng.com (1).png';
 import './news.-list.css';
@@ -22,7 +23,7 @@ const NewsList = (props) => {
                     hoverable 
                     onClick={() => history.push(`/home/${item._id}`)}
                     >
-                    <List.Item >
+                    <List.Item extra={<Button><DeleteOutlined /></Button>}>
                         <List.Item.Meta
                             avatar={<Avatar src={img} />}
                             title={<a href="https://ant.design">{item.title}</a>}
