@@ -22,7 +22,7 @@ const NewsList = (props) => {
                     hoverable 
                     onClick={() => history.push(`/home/${item._id}`)}
                     >
-                    <List.Item extra={<a href="/">Подробнее</a>}>
+                    <List.Item >
                         <List.Item.Meta
                             avatar={<Avatar src={img} />}
                             title={<a href="https://ant.design">{item.title}</a>}
