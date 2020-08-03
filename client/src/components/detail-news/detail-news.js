@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import { useParams } from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import {getToken} from '../../utils/utils';
-import {getNews} from '../../services/swapi-service';
-
-import { Typography, Card } from 'antd';
+import {getNews, deleteNews} from '../../services/swapi-service';
+import { Typography, Button } from 'antd';
 import './detail-news.css';
 
 const {Text, Title } = Typography;
-const { Meta } = Card
+
 
 const DetailNews = ({news}) => {
     const {id} = useParams();
     const [itemNews, setItemNews] = useState({title: null, text: null});
+    const history = useHistory();
 
     useEffect(() => {
         //Устанавливаем данные в state; 
@@ -30,6 +30,12 @@ const DetailNews = ({news}) => {
          }
     }
     
+    const deleteItem = (id) => {
+        deleteNews(id, getToken())
+            .then(res=> res.ok && res)
+            .then(() => history.push('/'))
+    }
+
     if(itemNews.text === undefined) return <h1>Loading...</h1>    
     return (
         <div className="wrap-text">
@@ -40,6 +46,12 @@ const DetailNews = ({news}) => {
             </div>        
             <br/>
             <Text>{itemNews.text}</Text>
+            <br/>
+            <Button
+                type="primary"
+                style={{marginTop: 10}}
+                danger 
+                onClick={()=>deleteItem(id)}>Удалить</Button>
         </div>
     )
 }
