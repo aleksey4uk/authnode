@@ -56,6 +56,13 @@ const HomePage = (props) => {
             .catch(()=>console.log('Извините, произошла ошибка'))
     }
 
+    //Получение новостей одного пользователя
+ /*   const getNewsAllUsers = (url) => {
+        getDate(url)
+            .then(writeNews)
+            .catch(()=>console.log('Извините, произошла ошибка'))
+    }
+*/
     const token = localStorage.getItem('loginStorage');
 
     if(!token) {
@@ -87,7 +94,7 @@ const HomePage = (props) => {
                     style={{ height: '100%', borderRight: 0 }}
                 >
                 <SubMenu key="sub1" icon={<UserOutlined />} title="Пользователь">
-                    <Menu.Item key="1">Статьи пользователя</Menu.Item>
+                    <Menu.Item key="1" onClick={()=>console.log('статьи пользователя')}>Статьи пользователя</Menu.Item>
                     <Menu.Item 
                         key="2"
                         onClick={()=>{setOnModal(true)}}>
