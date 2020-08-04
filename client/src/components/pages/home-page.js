@@ -73,6 +73,7 @@ const HomePage = (props) => {
 
     return (
         <Layout className="home">
+            
             <Header>
             <div className="logo"/>
             <Menu theme="dark" mode="horizontal" >
