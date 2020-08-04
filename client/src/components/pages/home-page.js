@@ -57,7 +57,7 @@ const HomePage = (props) => {
     }
 
     //Получение новостей одного пользователя
- /*   const getNewsAllUsers = (url) => {
+ /*   const getNewsOneUsers = (url) => {
         getDate(url)
             .then(writeNews)
             .catch(()=>console.log('Извините, произошла ошибка'))
