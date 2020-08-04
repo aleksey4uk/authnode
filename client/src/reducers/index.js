@@ -31,6 +31,7 @@ const reducer = (state=initianalState, action) => {
                     news: [...state.news, action.payload]
                 }
             }
+            return;
 
         case 'REMOVE-ITEM-NEWS': 
             if(state.news) {
@@ -43,11 +44,8 @@ const reducer = (state=initianalState, action) => {
                         ...state.news.slice(elemIdx+1)
                     ]
                 }
-            } 
-            return {
-                ...state,
-                news: [action.payload]
-            };     
+            }
+            return;
               
         default: return state
     }
