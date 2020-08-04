@@ -1,3 +1,4 @@
+import { getToken } from '../utils/utils';
 
 //Отправляем запрос на логин.
 const authIn = async (url="/api/", method={}, body=null) => {
@@ -54,8 +55,9 @@ const addNews = async (url="/api/", body=null, token) => {
   } 
 }
 
-const deleteNews = async (id, token) => {
+const deleteNews = async (id) => {
   try {
+    const token = getToken();
     const result = await fetch('/api/home/delete', {
         body: JSON.stringify({id}),
         method: 'DELETE',
