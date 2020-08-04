@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Spin } from 'antd';
 import { authIn } from '../../services/swapi-service';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 const layout = {
@@ -12,15 +12,22 @@ const tailLayout = {
   wrapperCol: { offset: 5, span: 20 },
 };
 
+const errors = (text) => {
+  message.error(text);
+};
+
+
 const AuthForm = () => {
   const [userForm, setUserForm] = useState({email: '', password: ''});
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
 
   const onFinish = async (user)  => {
+
     setLoading(true);
     const results = await authIn('/api/auth/login', 'POST', user );
     setLoading(false);
+
     if(results.token) {
       const storageName = 'loginStorage';
       localStorage.setItem(storageName, JSON.stringify({
@@ -29,6 +36,11 @@ const AuthForm = () => {
       }))
       setLogin(true);
     }
+
+    if (results.message) {
+      errors(results.message);
+    }
+  
   };
 
   const onFinishFailed = errorInfo => {
@@ -51,8 +63,10 @@ const AuthForm = () => {
       {
         login && <Redirect to="/home"/> 
       }
+      
       <Spin tip="Пожалуйста, подождите..." spinning={loading}>
         <Card title="Войдите в систему" style={{ width: 450}}>
+        
         <Form
           {...layout}
           onFinish={()=>onFinish(userForm)}

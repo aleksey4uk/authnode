@@ -3,6 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import AuthPage from '../pages/auth-page';
 import {ErrorPage} from '../pages/error-page';
 import HomePage from '../pages/home-page';
+import { Chat } from '../pages/chat-page';
 import AddNews from '../add-news'
 import DetailPage from '../pages/detail-page';
 import {getToken} from '../../utils/utils.js';
@@ -19,11 +20,13 @@ function App() {
       <Switch>
           <Route path='/' exact component={AuthPage}/>
           <Route path='/home' exact component={HomePage} />
+          <Route path="/chat" component={Chat}/>
           <Route path='/home/:id'>
             <DetailPage/>
           </Route> 
           <Route path='/news' component={AddNews}/>
           <Route component={ErrorPage}/>
+          
         </Switch>
     </div>
   );
