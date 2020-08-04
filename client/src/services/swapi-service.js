@@ -1,3 +1,4 @@
+import { getToken } from '../utils/utils';
 
 //Отправляем запрос на логин.
 const authIn = async (url="/api/", method={}, body=null) => {
@@ -54,4 +55,27 @@ const addNews = async (url="/api/", body=null, token) => {
   } 
 }
 
-export { authIn, getNews, addNews };
+const deleteNews = async (id) => {
+  try {
+    const token = getToken();
+    const result = await fetch('/api/home/delete', {
+        body: JSON.stringify({id}),
+        method: 'DELETE',
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return result.json();
+  } catch(e) {
+      return console.log("Произошла ошибка при удалении", e)
+  }
+}
+
+export { 
+  authIn,
+  getNews, 
+  addNews, 
+  deleteNews 
+};

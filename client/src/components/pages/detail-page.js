@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import AddNews from '../add-news';
 import DetailNews from '../detail-news';
 import {useLogOut} from '../../utils/utils';
+import {getToken} from '../../utils/utils';
 
-import { StarOutlined, UserOutlined, LaptopOutlined } from '@ant-design/icons';
+import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -13,12 +16,20 @@ const DetailPage = () => {
   const [onModal, setOnModal] = useState(false);
   const logOut = useLogOut();
 
+  const token = getToken()
+  if(token.error) return <Redirect to="/"/> 
   return (
     <Layout className="home">
         <Header>
         <div className="logo"/>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1"><StarOutlined/>Главная</Menu.Item>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[``]}>
+          <Menu.Item key="1"><StarOutlined/><Link to="/">Главная</Link></Menu.Item>
+          <Menu.Item 
+                    key="2" 
+                    style={{float: 'right'}}
+                    onClick={logOut}
+                >
+                    <LogoutOutlined/><Link to="/">Выйти</Link></Menu.Item> 
         </Menu>
         </Header>
 
