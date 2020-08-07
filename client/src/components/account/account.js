@@ -5,7 +5,7 @@ import { Card, Row, Col, List, Typography, Button, Spin } from 'antd';
 import './account.css';
 
 
-const { Paragraph } = Typography; 
+const { Paragraph, Title } = Typography; 
 
 const installStyle = () => ({
     marginLeft: 22,
@@ -89,18 +89,34 @@ const EditPhoto = () => {
     )
 }
 
+const EditCeeps = () => {
+    return (
+        <div>
+            <h2>Добавьте или измените заметки о себе </h2>
+            <hr/>
+            <Paragraph>Web-Designer</Paragraph>
+            <br/>
+            <Button>Сохранить</Button> 
+        </div>
+    )
+}
+
 const Account = () => {
     const [selectedItem, setSelectedItem] = useState(null);
 
-    let SelectedComponent = () => <EditEmail />
+    let SelectedComponent = () => <h2>Ничего не выбрано</h2>
     if (selectedItem === 0) SelectedComponent = EditEmail;
     if (selectedItem === 1) SelectedComponent = EditName;
-    if (selectedItem === 2) SelectedComponent = EditPhoto;
+    if (selectedItem === 2) SelectedComponent = EditPhoto
+    if (selectedItem === 3) SelectedComponent = EditCeeps;
 
     return (
         <Row style={{width: 800}}>
+            <Title level={2}>Личный кабенет</Title>
+            
             <Col span={18} push={6}>
                     <Card  style={installStyle()}>
+                        
                         <SelectedComponent/>
                     </Card>
             </Col>
