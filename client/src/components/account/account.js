@@ -92,7 +92,7 @@ const EditPhoto = () => {
 const Account = () => {
     const [selectedItem, setSelectedItem] = useState(null);
 
-    let SelectedComponent = () => <h2>Ничего не выбрано</h2>
+    let SelectedComponent = () => <EditEmail />
     if (selectedItem === 0) SelectedComponent = EditEmail;
     if (selectedItem === 1) SelectedComponent = EditName;
     if (selectedItem === 2) SelectedComponent = EditPhoto;
@@ -111,9 +111,13 @@ const Account = () => {
                 size="large"
                 bordered
                 dataSource={data}
-                renderItem={(item, idx) => (
-                    <List.Item onClick={() => setSelectedItem(idx)}>{item}</List.Item>
-                )}
+                renderItem={(item, idx) => {
+                    let classes = '';
+                    selectedItem === idx ? classes += 'selected' : classes = '';
+                    return (
+                        <List.Item className={classes} onClick={() => setSelectedItem(idx)}>{item}</List.Item>
+                    )
+                }}
             />
             </Col>
       </Row>

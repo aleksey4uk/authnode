@@ -15,3 +15,9 @@
     cursor: pointer;
 }
 
+.selected {
+  background-color: #00c6ff;
+}
+
+
+
