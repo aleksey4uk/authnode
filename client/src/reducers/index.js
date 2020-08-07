@@ -16,14 +16,14 @@ const reducer = (state=initianalState, action) => {
                 ...state,
                 loading: false 
             }  
-        case 'WRITE-NEWS': 
+
+        case 'WRITE-NEWS':
             return {
                 ...state,
                 loading: false,
                 news: action.payload
             }
-
-        
+  
         case 'ADD-ITEM-NEWS': 
             if(state.news) {
                 return {

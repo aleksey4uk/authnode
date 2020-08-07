@@ -9,6 +9,7 @@ import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined} from '@ant-
 import { Layout, Menu } from 'antd';
 import { Redirect } from 'react-router-dom';
 
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -48,7 +49,8 @@ const DetailPage = () => {
                       onClick={()=>{setOnModal(true)}}>
                           Добавить статью
                   </Menu.Item>
-                  <Menu.Item key="3" onClick={logOut}>Выйти из уч. записи</Menu.Item>
+                  <Menu.Item key="3">Личный Кабинет</Menu.Item>
+                  <Menu.Item key="4" onClick={logOut}>Выйти из уч. записи</Menu.Item>
               </SubMenu>
             <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">
                 <Menu.Item key="5">Все статьи</Menu.Item>

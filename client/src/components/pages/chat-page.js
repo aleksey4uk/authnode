@@ -1,3 +1,6 @@
 import React from 'react';
+import Chat from '../chat';
 
-export const Chat = () => (<h2>Hello to chat</h2>)
+const ChatPage = () => (<Chat/>);
+
+export { ChatPage };

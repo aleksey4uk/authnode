@@ -1,0 +1,17 @@
+.account .ant-list-item {
+  background-image: linear-gradient(to left,
+    transparent,
+    transparent 50%,
+    #00c6ffff 50%,
+    #00c6ff);
+  background-position: 100% 0;
+  background-size: 200% 100%;
+  transition: all .25s ease-in;
+}
+
+.account .ant-list-item:hover {
+    background-position: 0 0;
+    color:#333;
+    cursor: pointer;
+}
+

@@ -73,9 +73,52 @@ const deleteNews = async (id) => {
   }
 }
 
+//Получение данных о учетной записи.
+const getAccountDetails = async (url, token) => {
+  console.log(token)
+  try {
+    const response = await fetch(url, {
+        method: 'GET', 
+        body: null,
+        headers: {
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+    return response.json();
+  
+  } catch(e) {
+    console.log('Sorry, there was an error.', e.message);
+    throw new Error(e)
+  } 
+}
+
+//Изменение данных учетной записи.
+const editAccountDetails = async (url, body, token) => {
+  try {
+    const token = getToken();
+    const result = await fetch(url, {
+        body: JSON.stringify(body),
+        method: 'PUT',
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return result.json();
+
+  } catch(e) {
+      return console.log("Произошла ошибка при удалении", e)
+  }
+}
+
 export { 
   authIn,
   getNews, 
   addNews, 
-  deleteNews 
+  deleteNews,
+  getAccountDetails,
+  editAccountDetails
 };

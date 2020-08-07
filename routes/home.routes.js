@@ -15,6 +15,18 @@ router.get('/home', auth, async (req, res) => {
    }
 })
 
+//get account details
+router.get('/home/getaccount/', auth, async (req, res) => {   
+   try {
+      const user = await User.findById(req.user.userId);
+      
+      res.json({email: user.email});
+
+   } catch(e) {
+      res.status(400).json({message: 'Извините, произошла ошибка'});
+   }
+}) 
+
 //get all news
 router.get('/home/all', auth, async (req, res) => {
    try {
@@ -60,6 +72,24 @@ router.post('/add', auth, async (req, res) => {
    }   
 })
 
+//editUserData
+router.put('/home/editemail', auth, async (req, res) => {
+
+   try {
+      let userData = req.body;
+      console.log(userData)
+
+      const id = req.user.userId;
+
+      const newUserData = await User.findByIdAndUpdate(id, userData)
+      console.log(newUserData)
+
+   } catch(e) {
+      res.status(201).json({message: "Извините, произошла ошибка"});
+   }   
+})
+
+//remove news item
 router.delete('/home/delete', auth, async (req, res) => {
    try {
       const {id} = req.body;   
@@ -71,7 +101,6 @@ router.delete('/home/delete', auth, async (req, res) => {
    }
 
 })
-//remove news item 
 
 
 

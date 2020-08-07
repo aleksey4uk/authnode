@@ -6,8 +6,11 @@ import DetailNews from '../detail-news';
 import AddNews from '../add-news';
 import { getNews } from '../../services/swapi-service';
 import { getToken } from '../../utils/utils';
-import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
+import { StarOutlined, UserOutlined, LaptopOutlined, LogoutOutlined, WechatOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
+import { ChatPage } from '../pages/chat-page';
+import Account from '../account/account';
+import {useLogOut} from '../../utils/utils';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -25,7 +28,10 @@ const HomePage = (props) => {
                 loadNews();
                 return res;
             })
-            .then(res => writeNews(res))
+            .then(res => {
+                if (res.message) return logOut();
+                writeNews(res)
+            })
             .catch((e) => {
                 loadComplete()
                 console.log('ошибка с сервера', e.message);
@@ -56,20 +62,14 @@ const HomePage = (props) => {
             .catch(()=>console.log('Извините, произошла ошибка'))
     }
 
-    //Получение новостей одного пользователя
- /*   const getNewsOneUsers = (url) => {
-        getDate(url)
-            .then(writeNews)
-            .catch(()=>console.log('Извините, произошла ошибка'))
-    }
-*/
     const token = localStorage.getItem('loginStorage');
 
-    if(!token) {
-        return <Redirect to="/"/>
-    }
+    if(!token) return <Redirect to="/"/>;
 
-    const content = showDetailNews ? <DetailNews id={id} setShowDetailNews={setShowDetailNews}/> : <NewsList />
+    let content = (<NewsList />)
+    if (showDetailNews) content = (<DetailNews id={id} setShowDetailNews={setShowDetailNews}/>);
+    if (props.chat) content = (<ChatPage />);
+    if (props.account) content = (<Account />)
 
     return (
         <Layout className="home">
@@ -78,12 +78,14 @@ const HomePage = (props) => {
             <div className="logo"/>
             <Menu theme="dark" mode="horizontal" >
                 <Menu.Item key="1"><StarOutlined/><Link to="/">Главная</Link></Menu.Item>
+                <Menu.Item key="2"><WechatOutlined/><Link to="/chat">Чат</Link></Menu.Item>
                 <Menu.Item 
-                    key="2" 
+                    key="4" 
                     style={{float: 'right'}}
                     onClick={logOut}
                 >
-                    <LogoutOutlined/><Link to="/">Выйти</Link></Menu.Item> 
+                    <LogoutOutlined/><Link to="/">Выйти</Link>
+                </Menu.Item> 
             </Menu>
             </Header>
             <Layout>
@@ -101,9 +103,11 @@ const HomePage = (props) => {
                         onClick={()=>{setOnModal(true)}}>
                             Добавить статью
                     </Menu.Item>
+                    <Menu.Item key="3" onClick={() => history.push('/lk')}>Личный Кабинет</Menu.Item>
                     <Menu.Item 
-                        key="3"
-                        onClick={logOut}>Выйти из уч. записи</Menu.Item>
+                        key="4"
+                        onClick={logOut}>Выйти из уч. записи
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">
                     <Menu.Item 
