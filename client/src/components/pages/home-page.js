@@ -59,6 +59,7 @@ const HomePage = (props) => {
     const getNewsAllUsers = (url) => {
         getDate(url)
             .then(writeNews)
+            .then(()=>history.push('/home/all'))
             .catch(()=>console.log('Извините, произошла ошибка'))
     }
 
@@ -69,7 +70,8 @@ const HomePage = (props) => {
     let content = (<NewsList />)
     if (showDetailNews) content = (<DetailNews id={id} setShowDetailNews={setShowDetailNews}/>);
     if (props.chat) content = (<ChatPage />);
-    if (props.account) content = (<Account />)
+    if (props.account) content = (<Account />);
+    if (props.all) content = (<NewsList />)
 
     return (
         <Layout className="home">
@@ -106,7 +108,8 @@ const HomePage = (props) => {
                     <Menu.Item key="3" onClick={() => history.push('/lk')}>Личный Кабинет</Menu.Item>
                     <Menu.Item 
                         key="4"
-                        onClick={logOut}>Выйти из уч. записи
+                        onClick={logOut}>
+                            Выйти из уч. записи
                     </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="Все пользователи">

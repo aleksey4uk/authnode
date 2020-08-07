@@ -20,6 +20,9 @@ function App() {
       <Switch>
           <Route path='/' exact component={AuthPage}/>
           <Route path='/home' exact component={HomePage} />
+          <Route path="/home/all">
+            <HomePage all/>
+          </Route>
           <Route path='/home/:id'>
             <DetailPage/>
           </Route> 

@@ -75,7 +75,6 @@ const deleteNews = async (id) => {
 
 //Получение данных о учетной записи.
 const getAccountDetails = async (url, token) => {
-  console.log(token)
   try {
     const response = await fetch(url, {
         method: 'GET', 

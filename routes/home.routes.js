@@ -1,7 +1,8 @@
 const { Router } = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
 const auth = require('../middleware/auth_middleware');
 const News = require('../models/news');
-const User = require('../models/user');
 const router = Router();
 
 //get home page;
@@ -77,10 +78,14 @@ router.put('/home/editemail', auth, async (req, res) => {
 
    try {
       let userData = req.body;
-      console.log(userData)
+      console.log('---------------\n', "данные с клиента", '/n');
+
+      if(userData.password) {
+         const hashedPassword = await bcrypt.hash(userData.password,12);
+         userData.password = hashedPassword;
+      }
 
       const id = req.user.userId;
-
       const newUserData = await User.findByIdAndUpdate(id, userData)
       console.log(newUserData)
 
