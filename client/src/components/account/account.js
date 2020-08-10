@@ -4,7 +4,6 @@ import { getAccountDetails, editAccountDetails } from '../../services/swapi-serv
 import { Card, Row, Col, List, Typography, Button, Spin } from 'antd';
 import './account.css';
 
-
 const { Paragraph, Title } = Typography; 
 
 const installStyle = () => ({
@@ -18,7 +17,8 @@ const data = [
     'ФИО',
     'Фото',
     'Заметки',
-  ];
+    'Удалить уч. Запись'
+];
 
 const EditEmail = () => {
     const [email, setEmail] = useState('');
@@ -113,7 +113,6 @@ const Account = () => {
     return (
         <Row style={{width: 800}}>
             <Title level={2}>Личный кабенет</Title>
-            
             <Col span={18} push={6}>
                     <Card  style={installStyle()}>
                         
@@ -140,4 +139,4 @@ const Account = () => {
     );
 }
 
-export default Account 
+export default Account;
